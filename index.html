@@ -249,6 +249,8 @@ section{position:relative;}
 .step h3{font-weight:800;font-size:1.5rem;margin-bottom:1.4rem;}
 .rsvp-spots{margin-top:-.8rem;margin-bottom:1.4rem;font-size:.9rem;opacity:.85;}
 .rsvp-spots b{color:var(--sun);}
+.rsvp-deadline{margin-top:-.6rem;margin-bottom:1.4rem;font-size:.9rem;font-weight:600;opacity:.9;}
+.rsvp-deadline b{color:var(--sun);}
 .choice{display:flex;flex-direction:column;gap:.9rem;}
 .choice button{font-family:inherit;font-weight:700;font-size:1.05rem;padding:1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.2);
   cursor:pointer;background:rgba(255,255,255,.08);color:#fff;transition:transform .2s,background .2s;}
@@ -383,11 +385,11 @@ footer small{display:block;margin-top:.7rem;opacity:.6;}
         <div class="plan-item"><div class="plan-node">🏊</div><div class="plan-time">12:00 pm</div><div class="plan-name">Llegamos</div><div class="plan-desc">Bienvenida y al agua</div></div>
         <div class="plan-item"><div class="plan-node">🍔</div><div class="plan-time">2:00 pm</div><div class="plan-name">Comida</div><div class="plan-desc">A recargar energía</div></div>
         <div class="plan-item"><div class="plan-node">🎶</div><div class="plan-time">4:00 pm</div><div class="plan-name">Música</div><div class="plan-desc">Que suene la fiesta</div></div>
-        <div class="plan-item"><div class="plan-node">🎂</div><div class="plan-time">5:00 pm</div><div class="plan-name">Pastel</div><div class="plan-desc">Brindis por Emanuel</div></div>
-        <div class="plan-item"><div class="plan-node">🎉</div><div class="plan-time">6:00 pm</div><div class="plan-name">¡A celebrar!</div><div class="plan-desc">Hasta que el sol baje</div></div>
+        <div class="plan-item"><div class="plan-node">🎉</div><div class="plan-time">5:00 pm</div><div class="plan-name">¡A celebrar!</div><div class="plan-desc">Hasta que el sol baje</div></div>
+        <div class="plan-item"><div class="plan-node">🎂</div><div class="plan-time">6:00 pm</div><div class="plan-name">Pastel</div><div class="plan-desc">Brindis por Emanuel</div></div>
       </div>
     </div>
-    <div class="plan-hint">Desliza para recorrer el día →</div>
+    <div class="plan-hint">Desliza para recorrer el día ⬇️</div>
   </div>
 </section>
 
@@ -451,6 +453,7 @@ footer small{display:block;margin-top:.7rem;opacity:.6;}
       <div class="step" id="step1">
         <h3 id="rsvpQ">¿Vienes a la pool party?</h3>
         <p class="rsvp-spots" id="rsvpSpots" hidden></p>
+        <p class="rsvp-deadline">📅 Confirma tu asistencia antes del <b>4 de agosto</b></p>
         <div class="choice">
           <button class="yes" id="btnYes">🎉 ¡Sí, ahí estaré!</button>
           <button class="no" id="btnNo">😢 No podré asistir</button>
@@ -730,7 +733,7 @@ function show(el){
 document.querySelectorAll('[data-restart]').forEach(b=>b.addEventListener('click',()=>show(step1)));
 
 function waYes(){
-  const l=['¡Hola! Confirmo mi asistencia a los XV de Emanuel 🌊'];
+  const l=['¡Hola! Confirmo mi asistencia a los XV de Emanuel '+'\u{1F30A}'];
   if(GUEST)l.push('Nombre: '+GUEST);
   if(PAX>0)l.push('Asistentes: '+PAX);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(l.join('\n'))}`;

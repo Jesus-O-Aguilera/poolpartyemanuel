@@ -140,20 +140,21 @@ function render(){
   prevBtn.href=link;
   const name=gName.value.trim();
   const first=name?name.split(' ')[0]:'';
-  const msg=`¡Hola${first?' '+first:''}! 🌊 Estás invitado a los XV de Emanuel.\n`+
-            `Ábrela aquí y confirma tu asistencia 👇\n${link}`;
+  const W='\u{1F30A}', DOWN='\u{1F447}', CAL='\u{1F4C5}';
+  const msg=`¡Hola${first?' '+first:''}! Estás invitado a los XV de Emanuel.\n`+
+            `Ábrela aquí y confirma tu asistencia\n${link}\n\n Confirma tu asistencia antes del 4 de agosto.`;
 
   const national=normalizePhone();
   if(national.length>=10){
     // envía directo al contacto
     waBtn.href=`https://wa.me/${COUNTRY}${national}?text=`+encodeURIComponent(msg);
-    waBtn.textContent='💬 Enviar por WhatsApp';
+    waBtn.textContent='\u{1F4AC} Enviar por WhatsApp';
     phoneNote.textContent=`Se enviará a +${COUNTRY} ${national}.`;
     phoneNote.classList.remove('warn');
   }else{
     // sin teléfono válido: abre WhatsApp para elegir contacto manualmente
     waBtn.href='https://wa.me/?text='+encodeURIComponent(msg);
-    waBtn.textContent='💬 Compartir por WhatsApp';
+    waBtn.textContent='\u{1F4AC} Compartir por WhatsApp';
     if(gPhone.value.trim()===''){
       phoneNote.textContent='Se agrega el código de México (+52) automáticamente.';
       phoneNote.classList.remove('warn');
