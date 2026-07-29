@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel · Invitaciones XV de Emanuel</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss:#012a4a;--deep:#013a63;--sea:#0077b6;--aqua:#00b4d8;--sky:#48cae4;
+  --foam:#eefbff;--sun:#ffd23f;--coral:#ff5d73;--lime:#7ae582;--ink:#03303f;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;color:#fff;min-height:100vh;padding:2.4rem 1.2rem;
+  background:radial-gradient(120% 90% at 50% -10%,#48cae4 0%,#00b4d8 32%,#0077b6 60%,#012a4a 100%);}
+.shell{max-width:560px;margin:0 auto;}
+.head{text-align:center;margin-bottom:2rem;}
+.head .kick{letter-spacing:5px;text-transform:uppercase;font-size:.7rem;opacity:.85;font-weight:600;}
+.head h1{font-weight:900;font-size:clamp(1.9rem,7vw,2.6rem);letter-spacing:-1px;margin-top:.3rem;}
+.head p{opacity:.9;margin-top:.4rem;font-size:.95rem;}
+.card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:26px;
+  padding:1.8rem 1.5rem;backdrop-filter:blur(10px);box-shadow:0 22px 50px rgba(1,42,74,.35);}
+label{display:block;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem;opacity:.85;font-weight:600;}
+.field{margin-bottom:1.4rem;}
+input[type=text]{width:100%;padding:1rem;border-radius:14px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.96);color:var(--ink);font-family:inherit;font-size:1.05rem;outline:none;transition:box-shadow .2s;}
+input[type=text]:focus{box-shadow:0 0 0 3px rgba(255,210,63,.6);}
+.phone-note{display:block;margin-top:.45rem;font-size:.76rem;opacity:.8;}
+.phone-note.warn{color:var(--sun);opacity:1;}
+.counter{display:flex;align-items:center;gap:1.2rem;}
+.counter button{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;font-size:1.7rem;font-weight:700;
+  background:rgba(255,255,255,.16);color:#fff;transition:transform .15s,background .2s;}
+.counter button:hover{background:rgba(255,255,255,.28);}
+.counter button:active{transform:scale(.9);}
+.counter .val{font-weight:800;font-size:2.4rem;min-width:56px;text-align:center;color:var(--sun);}
+.counter .note{font-size:.85rem;opacity:.8;}
+.link-box{margin-top:.4rem;background:rgba(1,42,74,.35);border:1px dashed rgba(255,255,255,.35);
+  border-radius:14px;padding:.9rem 1rem;font-size:.82rem;word-break:break-all;line-height:1.5;color:#eafaff;}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.1rem;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;cursor:pointer;font-family:inherit;
+  font-weight:700;font-size:.92rem;padding:.95rem 1rem;border-radius:14px;border:none;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;color:#fff;}
+.btn:hover{transform:translateY(-3px);}
+.btn:active{transform:scale(.96);}
+.btn-copy{background:linear-gradient(135deg,#00b4d8,#01497c);box-shadow:0 12px 26px rgba(1,73,124,.4);}
+.btn-wa{background:linear-gradient(135deg,#25d366,#0f9d58);box-shadow:0 12px 26px rgba(15,157,88,.4);}
+.btn-prev{background:rgba(255,255,255,.16);}
+.btn-full{grid-column:1/-1;}
+.copied{display:block;text-align:center;margin-top:.7rem;font-size:.85rem;color:var(--lime);font-weight:600;min-height:1.2rem;opacity:0;transition:opacity .2s;}
+.copied.show{opacity:1;}
+.hint{text-align:center;margin-top:1.4rem;font-family:'Caveat',cursive;font-size:1.3rem;opacity:.9;}
+.tip{margin-top:1.6rem;font-size:.8rem;opacity:.8;line-height:1.5;text-align:center;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="head">
+    <div class="kick">🌴 Pool Party · Panel</div>
+    <h1>Crear invitación</h1>
+    <p>Personaliza el nombre y los lugares. Genera un link único para cada invitado.</p>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="gName">Nombre del invitado</label>
+      <input type="text" id="gName" placeholder="Ej. Familia López / Ana y Luis" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="gPhone">Teléfono (WhatsApp)
+      <input type="text" id="gPhone" inputmode="numeric" placeholder="Ej. 9371691110 (10 dígitos)" autocomplete="off">
+      <span class="phone-note" id="phoneNote">Se agrega el código de México (+52) automáticamente.</span>
+    </div>
+
+    <div class="field">
+      <label>Lugares reservados</label>
+      <div class="counter">
+        <button id="minus" aria-label="Menos">−</button>
+        <span class="val" id="paxVal">1</span>
+        <button id="plus" aria-label="Más">+</button>
+        <span class="note">persona(s) para este invitado</span>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:.6rem;">
+      <label>Link de la invitación</label>
+      <div class="link-box" id="linkBox">—</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-copy" id="copyBtn">📋 Copiar link</button>
+      <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">💬 Enviar por WhatsApp</a>
+      <a class="btn btn-prev btn-full" id="prevBtn" target="_blank" rel="noopener">👁️ Vista previa</a>
+    </div>
+    <span class="copied" id="copiedMsg">¡Link copiado! 🎉</span>
+  </div>
+
+  <p class="hint">Un link distinto por invitado ✨</p>
+  <p class="tip">Comparte el link por WhatsApp. Al abrirlo, el invitado verá su nombre, sus lugares reservados y solo podrá confirmar si asiste o no.</p>
+</div>
+
+<script>
+/* Nombre del archivo del template */
+const TEMPLATE = 'index.html';
+const COUNTRY = '52'; // código de país (México)
+
+let pax=1;
+const gName=document.getElementById('gName');
+const gPhone=document.getElementById('gPhone');
+const phoneNote=document.getElementById('phoneNote');
+const paxVal=document.getElementById('paxVal');
+const linkBox=document.getElementById('linkBox');
+const copyBtn=document.getElementById('copyBtn');
+const waBtn=document.getElementById('waBtn');
+const prevBtn=document.getElementById('prevBtn');
+const copiedMsg=document.getElementById('copiedMsg');
+
+function buildLink(){
+  const base=new URL(TEMPLATE, location.href);
+  const p=new URLSearchParams();
+  const name=gName.value.trim();
+  if(name)p.set('inv',name);
+  p.set('pax',pax);
+  base.search=p.toString();
+  return base.href;
+}
+/* Normaliza el teléfono: deja solo dígitos y antepone el código de país.
+   Acepta 10 dígitos (nacional) o que ya venga con 52. */
+function normalizePhone(){
+  let d=gPhone.value.replace(/\D/g,'');
+  if(d.startsWith('52'))d=d.slice(2);
+  return d; // solo el número nacional, sin código
+}
+function render(){
+  const link=buildLink();
+  linkBox.textContent=link;
+  prevBtn.href=link;
+  const name=gName.value.trim();
+  const first=name?name.split(' ')[0]:'';
+  const msg=`¡Hola${first?' '+first:''}! 🌊 Estás invitado a los XV de Emanuel.\n`+
+            `Ábrela aquí y confirma tu asistencia 👇\n${link}`;
+
+  const national=normalizePhone();
+  if(national.length>=10){
+    // envía directo al contacto
+    waBtn.href=`https://wa.me/${COUNTRY}${national}?text=`+encodeURIComponent(msg);
+    waBtn.textContent='💬 Enviar por WhatsApp';
+    phoneNote.textContent=`Se enviará a +${COUNTRY} ${national}.`;
+    phoneNote.classList.remove('warn');
+  }else{
+    // sin teléfono válido: abre WhatsApp para elegir contacto manualmente
+    waBtn.href='https://wa.me/?text='+encodeURIComponent(msg);
+    waBtn.textContent='💬 Compartir por WhatsApp';
+    if(gPhone.value.trim()===''){
+      phoneNote.textContent='Se agrega el código de México (+52) automáticamente.';
+      phoneNote.classList.remove('warn');
+    }else{
+      phoneNote.textContent='Ingresa 10 dígitos para enviar directo al contacto.';
+      phoneNote.classList.add('warn');
+    }
+  }
+}
+gName.addEventListener('input',render);
+gPhone.addEventListener('input',render);
+document.getElementById('plus').addEventListener('click',()=>{if(pax<20){pax++;paxVal.textContent=pax;render();}});
+document.getElementById('minus').addEventListener('click',()=>{if(pax>1){pax--;paxVal.textContent=pax;render();}});
+
+copyBtn.addEventListener('click',async()=>{
+  const link=buildLink();
+  try{await navigator.clipboard.writeText(link);}
+  catch(e){const t=document.createElement('textarea');t.value=link;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();}
+  copiedMsg.classList.add('show');
+  setTimeout(()=>copiedMsg.classList.remove('show'),2200);
+});
+
+render();
+</script>
+</body>
+</html>
