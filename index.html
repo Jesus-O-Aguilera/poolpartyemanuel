@@ -735,7 +735,6 @@ document.querySelectorAll('[data-restart]').forEach(b=>b.addEventListener('click
 function waYes(){
   const l=['¡Hola! Confirmo mi asistencia a los XV de Emanuel '+'\u{1F30A}'];
   if(GUEST)l.push('Nombre: '+GUEST);
-  if(PAX>0)l.push('Asistentes: '+PAX);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(l.join('\n'))}`;
 }
 function waNoURL(){
